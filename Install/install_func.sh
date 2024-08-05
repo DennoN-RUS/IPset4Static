@@ -39,7 +39,6 @@ try_get_bird4static_config_func(){
   read ANSWER
   if [ "$ANSWER" == "y" ]; then
     cd $HOME_FOLDER && cd ..
-    pwd
     if [ -f "scripts/func.sh" ]; then
       source scripts/func.sh
       if [ -n "$VISP" ]; then VISP_NAME="$VISP" && echo -e "ISP_NAME=$VISP_NAME"; fi
