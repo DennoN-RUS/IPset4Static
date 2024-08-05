@@ -135,7 +135,7 @@ ln_scripts_func(){
   if [ "$Bird4Static" == "1" ]; then
     cd $HOME_FOLDER && cd ..
     ln -sf $LISTS/*.list lists/
-    ls -sf $SCRIPTS/update-ipset.sh scripts/
+    ln -sf $SCRIPTS/update-ipset.sh scripts/
   fi
 }
 

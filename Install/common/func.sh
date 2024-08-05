@@ -49,22 +49,22 @@ vpn_variable_generate() {
 adguard_config_generate(){
   if [ -n "$ISP_COMMON" ]; then echo -e "$(echo $ISP_COMMON | sed 's/ /,/g')/ipset_isp"
   if [ "$CONF" == "1" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1"
+    if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1"; fi
   elif [ "$CONF" == "2" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1,ipset_vpn2"
-    if [ -n "$VPN_VPN1" ]; then echo -e "$(echo $VPN_VPN1 | sed 's/ /,/g')/ipset_vpn1"
-    if [ -n "$VPN_VPN2" ]; then echo -e "$(echo $VPN_VPN2 | sed 's/ /,/g')/ipset_vpn2"
+    if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1,ipset_vpn2"; fi
+    if [ -n "$VPN_VPN1" ]; then echo -e "$(echo $VPN_VPN1 | sed 's/ /,/g')/ipset_vpn1"; fi
+    if [ -n "$VPN_VPN2" ]; then echo -e "$(echo $VPN_VPN2 | sed 's/ /,/g')/ipset_vpn2"; fi
   fi
 }
 
 dnsmasq_config_generate(){
-  if [ -n "$ISP_COMMON" ]; then echo -e "ipset=$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp"
+  if [ -n "$ISP_COMMON" ]; then echo -e "ipset=$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp"; fi
   if [ "$CONF" == "1" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"
+    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"; fi
   elif [ "$CONF" == "2" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"
-    if [ -n "$VPN_VPN1" ]; then echo -e "ipset=$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"
-    if [ -n "$VPN_VPN2" ]; then echo -e "ipset=$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"
+    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"; fi
+    if [ -n "$VPN_VPN1" ]; then echo -e "ipset=$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"; fi
+    if [ -n "$VPN_VPN2" ]; then echo -e "ipset=$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"; fi
   fi
 }
 
