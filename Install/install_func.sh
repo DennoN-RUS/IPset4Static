@@ -139,7 +139,7 @@ ln_scripts_func(){
 
 change_dns_config(){
   if [ "$MODE" == "adguardhome" ]; then
-    sed -i 's/ipset_file.*/ipset_file: '$SYSTEM_FOLDER_SED'\/ect\/ipset4static_list.conf/' $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml
+    sed -i 's/ipset_file.*/ipset_file: '$SYSTEM_FOLDER_SED'\/etc\/ipset4static_list.conf/' $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml
   elif [ "$MODE" == "dnsmasq" ]; then
     if [ $(cat $SYSTEM_FOLDER/etc/dnsmasq.conf | grep conf-file=$SYSTEM_FOLDER/etc/ipset4static_list.conf -c ) -eq 0 ]; then
       echo conf-file=$SYSTEM_FOLDER/etc/ipset4static_list.conf >> $SYSTEM_FOLDER/etc/dnsmasq.conf
