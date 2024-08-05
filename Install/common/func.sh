@@ -47,7 +47,7 @@ vpn_variable_generate() {
 }
 
 adguard_config_generate(){
-  if [ -n "$ISP_COMMON" ]; then echo -e "$(echo $ISP_COMMON | sed 's/ /,/g')/ipset_isp"
+  if [ -n "$ISP_COMMON" ]; then echo -e "$(echo $ISP_COMMON | sed 's/ /,/g')/ipset_isp"; fi
   if [ "$CONF" == "1" ]; then
     if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1"; fi
   elif [ "$CONF" == "2" ]; then

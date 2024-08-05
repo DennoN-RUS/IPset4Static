@@ -92,7 +92,7 @@ show_interfaces_func(){
 
 # Config ISP
 config_isp_func(){
-  if [ -z "$VISP" ]; then
+  if [ -z "$VISP_NAME" ]; then
     echo "Enter the name of the provider interface from the list above (for exaple ppp0 or eth3)"
     read ISP
   fi
