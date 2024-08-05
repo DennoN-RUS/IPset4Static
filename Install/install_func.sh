@@ -81,7 +81,6 @@ fill_folder_and_sed_func(){
 # Copying the bird configuration file
 copy_ipset4static_config_func(){
   cp $HOME_FOLDER/Install/common/ipset4static.conf $SYSTEM_FOLDER/etc/ipset4static.conf
-  echo -e "sed conf"
   sed -i 's/MODEINPUT/'$MODE'/; s/CONFINPUT/'$VCONF'/' $SYSTEM_FOLDER/etc/ipset4static.conf
 }
 
