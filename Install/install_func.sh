@@ -95,8 +95,8 @@ config_isp_func(){
     echo "Enter the name of the provider interface from the list above (for exaple ppp0 or eth3)"
     read ISP
   fi
-  echo "Your are select ISP $VISP"
-  sed -i 's/ISPINPUT/'$VISP'/' $SYSTEM_FOLDER/etc/ipset4static.conf
+  echo "Your are select ISP $VISP_NAME"
+  sed -i 's/ISPINPUT/'$VISP_NAME'/' $SYSTEM_FOLDER/etc/ipset4static.conf
 }
 
 # Config VPN1
