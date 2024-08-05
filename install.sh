@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION_NEW="v0.1"
+VERSION_NEW="v0.2"
 
 # Getting the path to run the script
 ABSOLUTE_FILENAME=`readlink -f "$0"`
@@ -60,6 +60,7 @@ copy_ipset4static_config_func
 
 # Reading vpn and provider interfaces, replacing in scripts and bird configuration
 show_interfaces_func
+config_isp_func
 config_vpn1_func
 if [ "$VCONF" == "2" ]; then config_vpn2_func; fi
 

@@ -4,7 +4,7 @@
 
 [ "$type" == "ip6tables" ] && exit
 [ "$table" != "mangle" ] && exit
-[ -z "$(ip link list | grep $VPN2_NAME)" ] && exit
+[ -z "$(ip link list | grep $VPN1_NAME)" ] && exit
 [ -z "$(ipset --quiet list ipset_vpn1)" ] && exit
 
 if [ -z "$(iptables-save | grep ipset_vpn1)" ]; then

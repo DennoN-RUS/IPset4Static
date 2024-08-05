@@ -28,6 +28,7 @@ get_old_config_func(){
   if [ -f "$SYSTEM_FOLDER/etc/ipset4static.conf" ]; then
     source $SYSTEM_FOLDER/etc/ipset4static.conf
     if [ -n "$CONF" ]; then VCONF="$CONF" && echo -e "\nCONF=$VCONF\n"; fi
+    if [ -n "$ISP_NAME" ]; then VISP_NAME="$ISP_NAME" && echo -e "ISP_NAME=$VISP_NAME\n"; fi
     if [ -n "$VPN1_NAME" ]; then VVPN1_NAME="$VPN1_NAME" && echo -e "VPN1_NAME=$VVPN1_NAME\n"; fi
     if [ -n "$VPN2_NAME" ]; then VVPN2_NAME="$VPN2_NAME" && echo -e "VPN2_NAME=$VVPN2_NAME\n"; fi
   fi
@@ -41,6 +42,7 @@ try_get_bird4static_config_func(){
     pwd
     if [ -f "scripts/func.sh" ]; then
       source scripts/func.sh
+      if [ -n "$VISP" ]; then VISP_NAME="$VISP" && echo -e "ISP_NAME=$VISP_NAME"; fi
       if [ -n "$VVPN1" ]; then VVPN1_NAME="$VVPN1" && echo -e "VPN1_NAME=$VVPN1_NAME"; fi
       if [ -n "$VVPN2" ]; then VVPN2_NAME="$VVPN2" && echo -e "VPN2_NAME=$VVPN2_NAME"; fi
     fi
@@ -89,6 +91,16 @@ show_interfaces_func(){
   ip addr show | awk -F" |/" '{gsub(/^ +/,"")}/inet /{print $(NF), $2}'
 }
 
+# Config ISP
+config_isp_func(){
+  if [ -z "$VISP" ]; then
+    echo "Enter the name of the provider interface from the list above (for exaple ppp0 or eth3)"
+    read ISP
+  fi
+  echo "Your are select ISP $VISP"
+  sed -i 's/ISPINPUT/'$VISP'/' $SYSTEM_FOLDER/etc/ipset4static.conf
+}
+
 # Config VPN1
 config_vpn1_func(){
   if [ -z "$VVPN1_NAME" ]; then
@@ -112,10 +124,14 @@ config_vpn2_func(){
 # Organizing scripts into folders
 ln_scripts_func(){
   ln -sf $SCRIPTS/ipset-table.sh $SYSTEM_FOLDER/etc/init.d/S03ipset-table
-  ln -sf $SCRIPTS/ipset-vpn1-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/010-ipset-vpn1-route.sh
-  if [ "$VCONF" == 2 ]; then ln -sf $SCRIPTS/ipset-vpn2-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/011-ipset-vpn2-route.sh; fi
-  ln -sf $SCRIPTS/ipset-vpn1-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/010-ipset-vpn1-netfilter.sh
-  if [ "$VCONF" == 2 ]; then ln -sf $SCRIPTS/ipset-vpn2-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/011-ipset-vpn2-netfilter.sh; fi
+  ln -sf $SCRIPTS/ipset-isp-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/010-ipset-isp-route.sh
+  ln -sf $SCRIPTS/ipset-isp-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/010-ipset-isp-netfilter.sh
+  ln -sf $SCRIPTS/ipset-vpn1-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/011-ipset-vpn1-route.sh
+  ln -sf $SCRIPTS/ipset-vpn1-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/011-ipset-vpn1-netfilter.sh
+  if [ "$VCONF" == 2 ]; then
+    ln -sf $SCRIPTS/ipset-vpn2-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/012-ipset-vpn2-route.sh
+    ln -sf $SCRIPTS/ipset-vpn2-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/012-ipset-vpn2-netfilter.sh
+  fi
   if [ "$Bird4Static" == "1" ]; then
     cd $HOME_FOLDER && cd ..
     ln -sf $LISTS/*.list lists/

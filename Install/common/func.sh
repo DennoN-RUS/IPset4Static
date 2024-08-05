@@ -1,8 +1,8 @@
  #SCRIPT VARIABLE
 SYSTEM_FOLDER=SYSTEMFOLDERINPUT
-IPSET_USER_VPN=$SYSTEM_FOLDER/etc/ipset-vpn.list
 IPSET_CONF=$SYSTEM_FOLDER/etc/ipset4static.conf
 IPSET_LIST=$SYSTEM_FOLDER/etc/ipset4static_list.conf
+ISPTXT=$HOMEPATH/lists/user-ipset-isp.list
 VPNTXT=$HOMEPATH/lists/user-ipset-vpn.list
 VPN1TXT=$HOMEPATH/lists/user-ipset-vpn1.list
 VPN2TXT=$HOMEPATH/lists/user-ipset-vpn2.list
@@ -17,12 +17,15 @@ get_info_func() {
   if [[ "$1" == "-v" ]]; then
     echo "VERSION=$VERSION"
     echo "CONF=$CONF"
-    if [ $VCONF == "1" ]; then echo -e " Use one vpn\n ISP=$VISP VPN=$VVPN1"; else echo -e " Use double vpn\n ISP=$VISP VPN1=$VVPN1 VPN2=$VVPN2"; fi
-    echo "MODE=$VMODE"
-    if [ $VMODE == "1" ]; then echo -e " Download mode\n URLS=$VURLS";
-    elif [ $VMODE == 2 ]; then echo -e " BGP mode\n IP=$VBGP_IP AS=$VBGP_AS";
-    else echo " File mode"
+    if [ $VCONF == "1" ]; then
+      echo -e " Use one vpn\n ISP=$ISP_NAME with SUBNET=$ISP_SUBNET"
+      echo -e " VPN=$VPN1_NAME with SUBNET=$VPN1_SUBNET"
+    else
+      echo -e " Use double vpn\n ISP=$ISP_NAME with SUBNET=$ISP_SUBNET"
+      echo -e " VPN1=$VPN1_NAME with SUBNET=$VPN1_SUBNET"
+      echo -e " VPN2=$VPN2_NAME with SUBNET=$VPN2_SUBNET"
     fi
+    echo "MODE=$VMODE"
     exit
   elif [[ "$1" == "-d" ]]; then DEBUG=1; fi
 }
@@ -35,6 +38,7 @@ init_files_func() {
 }
 
 vpn_variable_generate() {
+  ISP_COMMON=$(cat $ISPTXT | sed '/^#/d')
   VPN_COMMON=$(cat $VPNTXT | sed '/^#/d')
   if [ "$CONF" == "2" ]; then
     VPN_VPN1=$(cat $VPN1TXT | sed '/^#/d')
@@ -43,21 +47,24 @@ vpn_variable_generate() {
 }
 
 adguard_config_generate(){
+  if [ -n "$ISP_COMMON" ]; then echo -e "$(echo $ISP_COMMON | sed 's/ /,/g')/ipset_isp"
   if [ "$CONF" == "1" ]; then
-    echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1"
+    if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1"
   elif [ "$CONF" == "2" ]; then
-    echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1,ipset_vpn2"
-    echo -e "$(echo $VPN_VPN1 | sed 's/ /,/g')/ipset_vpn1"
-    echo -e "$(echo $VPN_VPN2 | sed 's/ /,/g')/ipset_vpn2"
+    if [ -n "$VPN_COMMON" ]; then echo -e "$(echo $VPN_COMMON | sed 's/ /,/g')/ipset_vpn1,ipset_vpn2"
+    if [ -n "$VPN_VPN1" ]; then echo -e "$(echo $VPN_VPN1 | sed 's/ /,/g')/ipset_vpn1"
+    if [ -n "$VPN_VPN2" ]; then echo -e "$(echo $VPN_VPN2 | sed 's/ /,/g')/ipset_vpn2"
   fi
 }
+
 dnsmasq_config_generate(){
+  if [ -n "$ISP_COMMON" ]; then echo -e "ipset=$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp"
   if [ "$CONF" == "1" ]; then
-    echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"
+    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"
   elif [ "$CONF" == "2" ]; then
-    echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"
-    echo -e "ipset=$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"
-    echo -e "ipset=$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"
+    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"
+    if [ -n "$VPN_VPN1" ]; then echo -e "ipset=$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"
+    if [ -n "$VPN_VPN2" ]; then echo -e "ipset=$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"
   fi
 }
 

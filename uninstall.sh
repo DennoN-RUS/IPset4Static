@@ -45,17 +45,19 @@ rm -r $SCRIPTS
 
 # Remove scripts into folders
 rm -f $SYSTEM_FOLDER/etc/init.d/S03ipset-table
-rm -f $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/010-ipset-vpn1-route.sh
-rm -f $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/011-ipset-vpn2-route.sh
-rm -f $SYSTEM_FOLDER/etc/ndm/netfilter.d/010-ipset-vpn1-netfilter.sh
-rm -f $SYSTEM_FOLDER/etc/ndm/netfilter.d/011-ipset-vpn2-netfilter.sh
+rm -f $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/010-ipset-isp-route.sh
+rm -f $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/011-ipset-vpn1-route.sh
+rm -f $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/012-ipset-vpn2-route.sh
+rm -f $SYSTEM_FOLDER/etc/ndm/netfilter.d/010-ipset-isp-netfilter.sh
+rm -f $SYSTEM_FOLDER/etc/ndm/netfilter.d/012-ipset-vpn1-netfilter.sh
+rm -f $SYSTEM_FOLDER/etc/ndm/netfilter.d/012-ipset-vpn2-netfilter.sh
 
 # Remove ipset conf
 rm -f $SYSTEM_FOLDER/etc/ipset4static.conf
 rm -f $SYSTEM_FOLDER/etc/ipset4static_list.conf
 if [ "$Bird4Static" == "1" ]; then
   cd $HOME_FOLDER && cd ..
-  rm -f lists/ipset*.list
+  rm -f lists/user-ipset*.list
   rm -f scripts/update-ipset.sh
 fi
 
