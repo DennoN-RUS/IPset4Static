@@ -8,6 +8,6 @@
 [ -z "$(ipset --quiet list ipset_isp)" ] && exit
 
 if [ -z "$(iptables-save | grep ipset_isp)" ]; then
-     iptables -w -t mangle -A PREROUTING ! -s $ISP_SUBNET -m conntrack --ctstate NEW -m set --match-set bypass dst -j CONNMARK --set-mark 1010
-     iptables -w -t mangle -A PREROUTING ! -s $ISP_SUBNET -m set --match-set bypass dst -j CONNMARK --restore-mark
+     iptables -w -t mangle -A PREROUTING ! -s $ISP_SUBNET -m conntrack --ctstate NEW -m set --match-set ipset_isp dst -j CONNMARK --set-mark 1010
+     iptables -w -t mangle -A PREROUTING ! -s $ISP_SUBNET -m set --match-set ipset_isp dst -j CONNMARK --restore-mark
 fi

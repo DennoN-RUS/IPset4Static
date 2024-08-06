@@ -2,18 +2,23 @@
 
 PATH=/opt/bin:/opt/sbin:/sbin:/bin:/usr/sbin:/usr/bin
 
+. SYSTEMFOLDERINPUT/etc/ipset4static.conf
+
 start(){
 	if [ -z "$(ip rule | awk '/^30010/')" ]; then
 		ipset create ipset_isp hash:ip
 		ip rule add fwmark 1010 table 1010 priority 30010
+		ip route add default dev $ISP_NAME table 1010
 	fi
 	if [ -z "$(ip rule | awk '/^30011/')" ]; then
 	    ipset create ipset_vpn1 hash:ip
     	ip rule add fwmark 1011 table 1011 priority 30011
+		ip route add default dev $VPN1_NAME table 1011
 	fi
 	if [ -z "$(ip rule | awk '/^30012/')" ]; then
 		ipset create ipset_vpn2 hash:ip
 		ip rule add fwmark 1012 table 1012 priority 30012
+		ip route add default dev $VPN2_NAME table 1012
 	fi
 }
 
