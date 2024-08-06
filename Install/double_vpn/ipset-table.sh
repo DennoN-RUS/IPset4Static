@@ -2,8 +2,6 @@
 
 PATH=/opt/bin:/opt/sbin:/sbin:/bin:/usr/sbin:/usr/bin
 
-. SYSTEMFOLDERINPUT/etc/ipset4static.conf
-
 start(){
   #ISP
   if [ -z "$(ipset list | grep ipset_isp1)" ]; then ipset create ipset_isp1 hash:ip; fi
