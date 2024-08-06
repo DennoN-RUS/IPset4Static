@@ -18,8 +18,8 @@ start(){
   #VPN2
   if [ -z "$(ipset list | grep ipset_vpn2)" ]; then ipset create ipset_vpn2 hash:ip; fi
   if [ -z "$(ip rule | awk '/^30012/')" ]; then ip rule add fwmark 1012 table 1012 priority 30012; fi
-  sh SYSTEMFOLDERINPUT/etc/ndm/ifstatechanged.d/011-ipset-vpn2-route.sh -start
-  sh SYSTEMFOLDERINPUT/etc/ndm/netfilter.d/011-ipset-vpn2-netfilter.sh -start
+  sh SYSTEMFOLDERINPUT/etc/ndm/ifstatechanged.d/012-ipset-vpn2-route.sh -start
+  sh SYSTEMFOLDERINPUT/etc/ndm/netfilter.d/012-ipset-vpn2-netfilter.sh -start
 }
 
 stop(){
