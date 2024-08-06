@@ -122,13 +122,13 @@ config_vpn2_func(){
 # Organizing scripts into folders
 ln_scripts_func(){
   ln -sf $SCRIPTS/ipset-table.sh $SYSTEM_FOLDER/etc/init.d/S03ipset-table
-  ln -sf $SCRIPTS/ipset-isp-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/010-ipset-isp-route.sh
-  ln -sf $SCRIPTS/ipset-isp-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/010-ipset-isp-netfilter.sh
+  ln -sf $SCRIPTS/ipset-isp-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/012-ipset-isp-route.sh
   ln -sf $SCRIPTS/ipset-vpn1-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/011-ipset-vpn1-route.sh
+  ln -sf $SCRIPTS/ipset-isp-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/012-ipset-isp-netfilter.sh
   ln -sf $SCRIPTS/ipset-vpn1-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/011-ipset-vpn1-netfilter.sh
   if [ "$VCONF" == 2 ]; then
-    ln -sf $SCRIPTS/ipset-vpn2-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/012-ipset-vpn2-route.sh
-    ln -sf $SCRIPTS/ipset-vpn2-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/012-ipset-vpn2-netfilter.sh
+    ln -sf $SCRIPTS/ipset-vpn2-route.sh $SYSTEM_FOLDER/etc/ndm/ifstatechanged.d/010-ipset-vpn2-route.sh
+    ln -sf $SCRIPTS/ipset-vpn2-netfilter.sh $SYSTEM_FOLDER/etc/ndm/netfilter.d/010-ipset-vpn2-netfilter.sh
   fi
   if [ "$Bird4Static" == "1" ]; then
     cd $HOME_FOLDER && cd ..
