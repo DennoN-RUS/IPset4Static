@@ -25,7 +25,7 @@ get_info_func() {
       echo -e " VPN1=$VPN1_NAME with SUBNET=$VPN1_SUBNET"
       echo -e " VPN2=$VPN2_NAME with SUBNET=$VPN2_SUBNET"
     fi
-    echo "MODE=$VMODE"
+    echo "MODE=$MODE"
     exit
   elif [[ "$1" == "-d" ]]; then DEBUG=1; fi
 }
