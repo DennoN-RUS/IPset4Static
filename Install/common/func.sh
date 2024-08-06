@@ -17,7 +17,7 @@ get_info_func() {
   if [[ "$1" == "-v" ]]; then
     echo "VERSION=$VERSION"
     echo "CONF=$CONF"
-    if [ $VCONF == "1" ]; then
+    if [ $CONF == "1" ]; then
       echo -e " Use one vpn\n ISP=$ISP_NAME with SUBNET=$ISP_SUBNET"
       echo -e " VPN=$VPN1_NAME with SUBNET=$VPN1_SUBNET"
     else

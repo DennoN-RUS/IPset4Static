@@ -7,7 +7,7 @@ PATH=/opt/bin:/opt/sbin:/sbin:/bin:/usr/sbin:/usr/bin
 start()
 {
 	if [ -z "$(ip rule | awk '/^30010/')" ]; then
-		ipset create ipset_isp hash:ip
+		ipset create ipset_isp1 hash:ip
 		ip rule add fwmark 1010 table 1010 priority 30010
 		ip route add default dev $ISP_NAME table 1010
 	fi

@@ -73,7 +73,7 @@ fill_folder_and_sed_func(){
     cp -i $HOME_FOLDER/Install/common/*.list $LISTS
     if [ "$VCONF" == "2" ]; then cp -i $HOME_FOLDER/Install/$CONFFOLDER/*.list $LISTS; fi
   fi
-  sed -i 's/SYSTEMFOLDERINPUT/'$SYSTEM_FOLDER_SED'/; s/HOMEFOLDERINPUT/'$HOME_FOLDER_SED'/' $SCRIPTS/*.sh
+  sed -i 's/VERSIONINPUT/'$VERSION_NEW'/; s/SYSTEMFOLDERINPUT/'$SYSTEM_FOLDER_SED'/; s/HOMEFOLDERINPUT/'$HOME_FOLDER_SED'/' $SCRIPTS/*.sh
   rm -f $SCRIPTS/sum.md5
 }
 
