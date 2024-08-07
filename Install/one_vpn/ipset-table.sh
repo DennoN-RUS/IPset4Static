@@ -23,7 +23,6 @@ stop(){
   if [ -n "$(ipset list | grep ipset_isp1)" ]; then ipset flush ipset_isp1; fi
   if [ -n "$(ip rule | awk '/^30010/')" ]; then ip rule del table 1010; fi
 }
-}
 
 case "$1" in
   start)
