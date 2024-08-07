@@ -21,9 +21,9 @@
 
 Более подробная инструкция установки и описание [тут](https://github.com/DennoN-RUS//IPset4Static/wiki/Установка)
 
+---
 Канал в телеграме: [тут](https://t.me/bird4static)
 
 Чат в телеграме: [тут](https://t.me/bird4static_chat)
 
----
 Поддержать проект можно [тут](https://yoomoney.ru/to/41001872039390)
