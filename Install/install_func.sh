@@ -93,7 +93,7 @@ show_interfaces_func(){
 config_isp_func(){
   if [ -z "$VISP_NAME" ]; then
     echo "Enter the name of the provider interface from the list above (for example ppp0 or eth3)"
-    read ISP
+    read VISP_NAME
   fi
   echo "Your are select ISP $VISP_NAME"
   sed -i 's/ISPINPUT/'$VISP_NAME'/' $SYSTEM_FOLDER/etc/ipset4static.conf
