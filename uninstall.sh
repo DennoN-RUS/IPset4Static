@@ -32,7 +32,7 @@ answer=0; echo "Do you want remove 'diffutils' and 'patch'? 0 - no 1 - yes (defa
 if [ "$answer" = "1" ]; then $SYSTEM_FOLDER/bin/opkg remove diffutils patch; fi
 
 # Remove DNS Settings
-if [ $(cat $SYSTEM_FOLDER/etc/dnsmasq.conf | grep conf-file=$SYSTEM_FOLDER/etc/ipset4static_list.conf -c ) -eq 1 ]; then
+if [ $(cat $SYSTEM_FOLDER/etc/dnsmasq.conf | grep "conf-file=$SYSTEM_FOLDER/etc/ipset4static_list.conf" -c ) -eq 1 ]; then
   sed -i '/conf-file='$SYSTEM_FOLDER_SED'\/etc\/ipset4static_list.conf/d' $SYSTEM_FOLDER/etc/dnsmasq.conf
   $SYSTEM_FOLDER/etc/init.d/S56dnsmasq restart
 elif [ $(cat $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml | grep "ipset_file: $SYSTEM_FOLDER/etc/ipset4static_list.conf" -c ) -eq 1 ]; then
