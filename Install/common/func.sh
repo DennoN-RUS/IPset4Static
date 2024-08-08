@@ -94,6 +94,8 @@ diff_funk() {
 restart_dns_func() {
   if [ "$DEBUG" == "1" ]; then echo -e "\n########### $(date) STEP_5: restart dns ###########\n" >&2; fi
   if [ "$(cat $MD5_SUM)" != "$(md5sum $IPSET_LIST*)" ]; then
+    echo "Flush Ipset"
+    $SYSTEM_FOLDER/etc/init.d/S03ipset-table restart
     md5sum $IPSET_LIST > $MD5_SUM
     echo "Restarting DNS"
     if [ "$MODE" == "adguardhome" ]; then
