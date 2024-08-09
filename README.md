@@ -13,7 +13,7 @@
 ## Установка AdguardHome
 1. Подключиться к entware по ssh: `ssh root@192.168.1.1 -p 222`
 2. `opkg update` - обновить пакеты opkg
-3. `opkg adguardhome-go` - установить AdguardHome
+3. `opkg install adguardhome-go` - установить AdguardHome
 
 ## Настройка кастомного DNS-сервера
 1. Отключить дефолтный DNS-сервер:
@@ -23,7 +23,7 @@
    3. `system configuration save` - сохранить конфиг
    4. `system reboot` - перезагрузить роутер
 * Через Web CLI:
-   1. Зайти на интерфейс роутера: http://192.168.1.1/a
+   1. Зайти на интерфейс роутера: http://192.168.1.1/a или на новых версия прошивки http://192.168.1.1/webcli 
    2. `opkg dns-override` - отключить дефолтный DNS-сервер
    3. `system configuration save` - сохранить конфиг
    4. `system reboot` - перезагрузить роутер
@@ -67,10 +67,6 @@
 * `./Bird4Static/IPset4Static/scripts/update-ipset.sh`
 * или так `./Bird4Static/scripts/update-ipset.sh` (это ссылка на изначальный файл)
   по факту соберет все в 1 конфигурационный файл и перезапустит днс
-
-## Починить youtube
-
-Нужно в файл `Bird4Static/IPset4Static/lists/user-ipset-vpn.list` добавить домен `googlevideo.com`, потом запустить `./Bird4Static/IPset4Static/scripts/update-ipset.sh`
 
 ## Диагностика ipset
 
