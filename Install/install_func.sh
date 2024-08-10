@@ -151,5 +151,5 @@ change_dns_config(){
 # Starting Services
 run_func(){
   $SYSTEM_FOLDER/etc/init.d/S03ipset-table restart
-  $SCRIPTS/update-ipset.sh
+  $SCRIPTS/update-ipset.sh -d
 }
