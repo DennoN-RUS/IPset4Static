@@ -100,8 +100,10 @@ restart_dns_func() {
     echo "Restarting DNS"
     if [ "$MODE" == "adguardhome" ]; then
       $SYSTEM_FOLDER/etc/init.d/S99adguardhome restart
+      sleep 5 $$ $SYSTEM_FOLDER/etc/init.d/S99adguardhome check
     elif [ "$MODE" == "dnsmasq" ]; then
       $SYSTEM_FOLDER/etc/init.d/S56dnsmasq restart
+      sleep 5 $$ $SYSTEM_FOLDER/etc/init.d/S56dnsmasq check
     fi
   fi
 }
