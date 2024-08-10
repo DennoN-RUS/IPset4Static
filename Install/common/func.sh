@@ -38,11 +38,11 @@ init_files_func() {
 }
 
 vpn_variable_generate() {
-  ISP_COMMON=$(cat $ISPTXT | sed '/^#/d')
-  VPN_COMMON=$(cat $VPNTXT | sed '/^#/d')
+  ISP_COMMON=$(cat $ISPTXT | tr -d '\r' | sed '/^#/d')
+  VPN_COMMON=$(cat $VPNTXT | tr -d '\r' | sed '/^#/d')
   if [ "$CONF" == "2" ]; then
-    VPN_VPN1=$(cat $VPN1TXT | sed '/^#/d')
-    VPN_VPN2=$(cat $VPN2TXT | sed '/^#/d')
+    VPN_VPN1=$(cat $VPN1TXT | tr -d '\r' | sed '/^#/d')
+    VPN_VPN2=$(cat $VPN2TXT | tr -d '\r' | sed '/^#/d')
   fi
 }
 
