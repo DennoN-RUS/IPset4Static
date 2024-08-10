@@ -96,7 +96,7 @@ restart_dns_func() {
   if [ "$(cat $MD5_SUM)" != "$(md5sum $IPSET_LIST*)" ]; then
     echo "Flush Ipset"
     $SYSTEM_FOLDER/etc/init.d/S03ipset-table restart
-    md5sum $IPSET_LIST > $MD5_SUM
+    md5sum $IPSET_LIST* > $MD5_SUM
     echo "Restarting DNS"
     if [ "$MODE" == "adguardhome" ]; then
       $SYSTEM_FOLDER/etc/init.d/S99adguardhome restart
