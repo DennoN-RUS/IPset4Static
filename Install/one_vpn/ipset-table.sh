@@ -18,9 +18,11 @@ start(){
 stop(){
   #VPN1
   if [ -n "$(ipset list | grep ipset_vpn1)" ]; then ipset flush ipset_vpn1; fi
+  if [ -n "$(ip route list table 1011)" ]; then ip route flush table 1011; fi
   if [ -n "$(ip rule | awk '/^30011/')" ]; then ip rule del table 1011; fi
   #ISP
   if [ -n "$(ipset list | grep ipset_isp1)" ]; then ipset flush ipset_isp1; fi
+  if [ -n "$(ip route list table 1010)" ]; then ip route flush table 1010; fi
   if [ -n "$(ip rule | awk '/^30010/')" ]; then ip rule del table 1010; fi
 }
 
