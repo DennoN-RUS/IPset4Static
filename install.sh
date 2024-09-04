@@ -24,7 +24,7 @@ if [ -f "$SYSTEM_FOLDER/etc/init.d/S56dnsmasq" ]; then
         echo -e "\nYou use dnsmasq mode\n"
     fi
 fi
-if [ -z $MODE ]
+if [ -z $MODE ]; then
     echo -e "\nadguardhome or dnsmasq is not running!\nPlease install and configure one of it first!!!\n"
     exit 0
 fi
