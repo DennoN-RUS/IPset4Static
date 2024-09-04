@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION_NEW="v1.0.5"
+VERSION_NEW="v1.0.6"
 
 # Getting the path to run the script
 ABSOLUTE_FILENAME=`readlink -f "$0"`
@@ -17,12 +17,14 @@ if [ -f "$SYSTEM_FOLDER/etc/init.d/S99adguardhome" ]; then
         MODE="adguardhome"
         echo -e "\nYou use adguardhome mode\n"
     fi
-elif [ -f "$SYSTEM_FOLDER/etc/init.d/S56dnsmasq" ]; then
+fi
+if [ -f "$SYSTEM_FOLDER/etc/init.d/S56dnsmasq" ]; then
     if [ $($SYSTEM_FOLDER/etc/init.d/S56dnsmasq check | grep -c alive) -eq 1 ]; then
         MODE="dnsmasq"
         echo -e "\nYou use dnsmasq mode\n"
     fi
-else
+fi
+if [ -z $MODE ]
     echo -e "\nadguardhome or dnsmasq dont running!\nPlease install and configure one of them first!!!\n"
     exit 0
 fi
