@@ -16,7 +16,7 @@ select_dns_mode(){
   if [ "$temp_mode" == "1" ]; then
       MODE="adguardhome"
       echo -e "\nYou use adguardhome mode\n"
-  elif  [ "$temp_mode" == "2" ]; then
+  elif [ "$temp_mode" == "2" ]; then
       MODE="dnsmasq"
       echo -e "\nYou use dnsmasq mode\n"
   else
