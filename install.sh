@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION_NEW="v1.0.6"
+VERSION_NEW="v1.0.7"
 
 # Getting the path to run the script
 ABSOLUTE_FILENAME=`readlink -f "$0"`
@@ -11,24 +11,7 @@ SYSTEM_FOLDER=`echo $HOME_FOLDER | awk -F/opt '{print $1}'`
 SYSTEM_FOLDER=$SYSTEM_FOLDER/opt && SYSTEM_FOLDER_SED=$(echo $SYSTEM_FOLDER | sed 's/\//\\\//g')
 echo -e "HomeFolder is $HOME_FOLDER \nSystemFolder is $SYSTEM_FOLDER"
 
-echo -e "\nChecking adguardhome or dnsmasq...\n"
-if [ -f "$SYSTEM_FOLDER/etc/init.d/S99adguardhome" ]; then
-    if [ $($SYSTEM_FOLDER/etc/init.d/S99adguardhome check | grep -c alive) -eq 1 ]; then 
-        MODE="adguardhome"
-        echo -e "\nYou use adguardhome mode\n"
-    fi
-fi
-if [ -f "$SYSTEM_FOLDER/etc/init.d/S56dnsmasq" ]; then
-    if [ $($SYSTEM_FOLDER/etc/init.d/S56dnsmasq check | grep -c alive) -eq 1 ]; then
-        MODE="dnsmasq"
-        echo -e "\nYou use dnsmasq mode\n"
-    fi
-fi
-if [ -z $MODE ]; then
-    echo -e "\nadguardhome or dnsmasq is not running!\nPlease install and configure one of it first!!!\n"
-    exit 0
-fi
-
+source $HOME_FOLDER/Install/install_func.sh
 
 while true; do
     echo -e "\nBegin install? y/n"
@@ -38,7 +21,8 @@ while true; do
 
 if [ $(echo $ABSOLUTE_FILENAME | grep -c Bird4Static) -eq 1 ]; then Bird4Static=1; else Bird4Static=0; fi
 
-source $HOME_FOLDER/Install/install_func.sh
+# Select dns
+select_dns_mode
 
 # Installing packages
 install_packages_func

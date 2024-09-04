@@ -1,4 +1,31 @@
-#+ Install packages
+# Select dns
+select_dns_mode(){
+  echo -e "\nChecking adguardhome or dnsmasq...\n"
+  temp_mode=0
+  if [ -f "$SYSTEM_FOLDER/etc/init.d/S99adguardhome" ]; then
+      if [ $($SYSTEM_FOLDER/etc/init.d/S99adguardhome check | grep -c alive) -eq 1 ]; then temp_mode=1; fi
+  fi
+  if [ -f "$SYSTEM_FOLDER/etc/init.d/S56dnsmasq" ]; then
+      if [ $($SYSTEM_FOLDER/etc/init.d/S56dnsmasq check | grep -c alive) -eq 1 ]; then temp_mode=$(( temp_mode +=2 )); fi
+  fi
+  if [ "$temp_mode" == "3" ]; then
+          echo -e "\nSelect mode: \n 1 - Use adguardhome (default) \n 2 - Use dnsmasq"
+          read temp_mode;
+          if [ "$temp_mode" != "2" ]; then temp_mode=1; fi
+  fi
+  if [ "$temp_mode" == "1" ]; then
+      MODE="adguardhome"
+      echo -e "\nYou use adguardhome mode\n"
+  elif  [ "$temp_mode" == "2" ]; then
+      MODE="dnsmasq"
+      echo -e "\nYou use dnsmasq mode\n"
+  else
+      echo -e "\nadguardhome or dnsmasq is not running!\nPlease install and configure one of it first!!!\n"
+      exit 0
+  fi
+}
+
+# Install packages
 install_packages_func(){
   # Update busybox
   $SYSTEM_FOLDER/bin/opkg update
@@ -7,7 +34,7 @@ install_packages_func(){
   $SYSTEM_FOLDER/bin/opkg install ipset iptables diffutils patch
 }
 
-#+ Create start folders
+# Create start folders
 create_folder_func(){
   mkdir -p $SCRIPTS
   mkdir -p $LISTS
@@ -64,7 +91,7 @@ select_number_vpn_func(){
   fi
 }
 
-# Filling script folders and custom sheets
+# Filling script folders and custom sheetsb
 fill_folder_and_sed_func(){
   cp $HOME_FOLDER/Install/common/*.sh $SCRIPTS
   cp $HOME_FOLDER/Install/$CONFFOLDER/*.sh $SCRIPTS
@@ -77,7 +104,7 @@ fill_folder_and_sed_func(){
   rm -f $SCRIPTS/sum.md5
 }
 
-# Copying the bird configuration file
+# Copying the ipset configuration file
 copy_ipset4static_config_func(){
   cp $HOME_FOLDER/Install/common/ipset4static.conf $SYSTEM_FOLDER/etc/ipset4static.conf
   sed -i 's/MODEINPUT/'$MODE'/; s/CONFINPUT/'$VCONF'/' $SYSTEM_FOLDER/etc/ipset4static.conf
