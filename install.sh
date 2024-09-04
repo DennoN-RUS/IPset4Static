@@ -13,17 +13,23 @@ echo -e "HomeFolder is $HOME_FOLDER \nSystemFolder is $SYSTEM_FOLDER"
 
 echo -e "\nChecking adguardhome or dnsmasq...\n"
 if [ -f "$SYSTEM_FOLDER/etc/init.d/S99adguardhome" ]; then
-    if [ $($SYSTEM_FOLDER/etc/init.d/S99adguardhome check | grep -c alive) -eq 1 ]; then 
+    if [ $($SYSTEM_FOLDER/etc/init.d/S99adguardhome check | grep -c alive) -eq 1 ]; then
         MODE="adguardhome"
         echo -e "\nYou use adguardhome mode\n"
+    else
+      echo -e "\nadguardhome is not running!\nPlease run it first!!!\n"
+      exit 0
     fi
 elif [ -f "$SYSTEM_FOLDER/etc/init.d/S56dnsmasq" ]; then
     if [ $($SYSTEM_FOLDER/etc/init.d/S56dnsmasq check | grep -c alive) -eq 1 ]; then
         MODE="dnsmasq"
         echo -e "\nYou use dnsmasq mode\n"
+    else
+      echo -e "\ndnsmasq is not running!\nPlease run it first!!!\n"
+      exit 0
     fi
 else
-    echo -e "\nadguardhome or dnsmasq dont running!\nPlease install and configure one of them first!!!\n"
+    echo -e "\nadguardhome or dnsmasq is not running!\nPlease install and configure one of it first!!!\n"
     exit 0
 fi
 
