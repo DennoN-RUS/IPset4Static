@@ -45,7 +45,7 @@
 1) Зайти по ssh в среду entware: `ssh root@192.168.1.1`
 
 2) Выполнить:
-    ```
+    ```bash
       opkg install git git-http
       git clone https://github.com/DennoN-RUS/IPset4Static.git
       chmod +x ./IPset4Static/*.sh
@@ -53,7 +53,6 @@
     ```
    Далее выбирать нужные параметры.
 
-Более подробная инструкция установки и описание [тут](https://github.com/DennoN-RUS/IPset4Static/wiki/Установка)
 
 ## Описание работы
 
