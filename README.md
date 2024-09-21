@@ -16,10 +16,10 @@
 
 2) Выполнить:
     ```bash
-      opkg install git git-http
-      git clone https://github.com/DennoN-RUS/IPset4Static.git
-      chmod +x ./IPset4Static/*.sh
-      ./IPset4Static/install.sh 
+   opkg install git git-http
+   git clone https://github.com/DennoN-RUS/IPset4Static.git
+   chmod +x ./IPset4Static/*.sh
+   ./IPset4Static/install.sh 
     ```
    Далее выбирать нужные параметры.
 
