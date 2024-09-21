@@ -58,13 +58,13 @@ adguard_config_generate(){
 }
 
 dnsmasq_config_generate(){
-  if [ -n "$ISP_COMMON" ]; then echo -e "ipset=$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp1"; fi
+  if [ -n "$ISP_COMMON" ]; then echo -e "ipset=/$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp1"; fi
   if [ "$CONF" == "1" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"; fi
+    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=/$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"; fi
   elif [ "$CONF" == "2" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"; fi
-    if [ -n "$VPN_VPN1" ]; then echo -e "ipset=$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"; fi
-    if [ -n "$VPN_VPN2" ]; then echo -e "ipset=$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"; fi
+    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=/$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"; fi
+    if [ -n "$VPN_VPN1" ]; then echo -e "ipset=/$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"; fi
+    if [ -n "$VPN_VPN2" ]; then echo -e "ipset=/$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"; fi
   fi
 }
 
