@@ -2,11 +2,18 @@
 
 . SYSTEMFOLDERINPUT/etc/ipset4static.conf
 
-if [ "$1" != "-start" ]; then
+if [ "$1" != "-start" ] && [ "$1" != "-stop" ]; then
   [ "$1" == "hook" ] || exit 0
   [ "$system_name" == "$VPN2_NAME" ] || exit 0
   [ ! -z "$(ipset --quiet list ipset_vpn2)" ] || exit 0
   [ "${connected}-${link}-${up}" == "yes-up-up" ] || exit 0
+fi
+
+if [ "$1" == "-stop" ]; then
+  if [ -n "$(ip route list table 1012)" ]; then
+    ip route flush table 1012
+  fi
+  exit 0
 fi
 
 if [ -z "$(ip route list table 1012)" ]; then

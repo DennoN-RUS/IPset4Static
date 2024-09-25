@@ -55,7 +55,9 @@ get_old_config_func(){
   if [ -f "$SYSTEM_FOLDER/etc/ipset4static.conf" ]; then
     source $SYSTEM_FOLDER/etc/ipset4static.conf
     if [ -n "$CONF" ]; then VCONF="$CONF" && echo -e "\nCONF=$VCONF\n"; fi
+    if [ -n "$TTL" ]; then VTTL="$TTL" && echo -e "\nTTL=$TTL\n"; fi
     if [ -n "$ISP_NAME" ]; then VISP_NAME="$ISP_NAME" && echo -e "ISP_NAME=$VISP_NAME\n"; fi
+    if [ -n "$ISP_GW" ]; then VISP_GW="$ISP_GW"; fi
     if [ -n "$VPN1_NAME" ]; then VVPN1_NAME="$VPN1_NAME" && echo -e "VPN1_NAME=$VVPN1_NAME\n"; fi
     if [ -n "$VPN2_NAME" ]; then VVPN2_NAME="$VPN2_NAME" && echo -e "VPN2_NAME=$VVPN2_NAME\n"; fi
   fi
@@ -107,7 +109,7 @@ fill_folder_and_sed_func(){
 # Copying the ipset configuration file
 copy_ipset4static_config_func(){
   cp $HOME_FOLDER/Install/common/ipset4static.conf $SYSTEM_FOLDER/etc/ipset4static.conf
-  sed -i 's/MODEINPUT/'$MODE'/; s/CONFINPUT/'$VCONF'/' $SYSTEM_FOLDER/etc/ipset4static.conf
+  sed -i 's/MODEINPUT/'$MODE'/; s/CONFINPUT/'$VCONF'/; s/TTL=.*/TTL='$VTTL'/' $SYSTEM_FOLDER/etc/ipset4static.conf
 }
 
 # Show interfaces
@@ -124,6 +126,7 @@ config_isp_func(){
   fi
   echo "Your are select ISP $VISP_NAME"
   sed -i 's/ISPINPUT/'$VISP_NAME'/' $SYSTEM_FOLDER/etc/ipset4static.conf
+  if [ -n "$VISP_GW" ]; then sed -i 's/#ISP_GW=/ISP_GW=/' $SYSTEM_FOLDER/etc/ipset4static.conf
 }
 
 # Config VPN1

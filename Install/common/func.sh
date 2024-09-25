@@ -16,6 +16,7 @@ VERSION=VERSIONINPUT
 get_info_func() {
   if [[ "$1" == "-v" ]]; then
     echo "VERSION=$VERSION"
+    echo "TTL=$TTL"
     echo "CONF=$CONF"
     if [ $CONF == "1" ]; then
       echo -e " Use one vpn\n ISP=$ISP_NAME with SUBNET=$ISP_SUBNET"
@@ -58,6 +59,7 @@ adguard_config_generate(){
 }
 
 dnsmasq_config_generate(){
+  if [ -n "$TTL" ]; then echo -e "max-ttl=$TTL"; fi
   if [ -n "$ISP_COMMON" ]; then echo -e "ipset=/$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp1"; fi
   if [ "$CONF" == "1" ]; then
     if [ -n "$VPN_COMMON" ]; then echo -e "ipset=/$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"; fi
@@ -68,10 +70,16 @@ dnsmasq_config_generate(){
   fi
 }
 
+adguard_change_ttl(){
+  cache=$(grep "cache_ttl_max: $TTL$" $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml)
+  if [ -z "$cache" ]; then sed -i 's/cache_ttl_max:.*/cache_ttl_max: '$TTL'/' $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml; fi
+}
+
 ipset_func() {
   vpn_variable_generate
   if [ "$MODE" == "adguardhome" ]; then
     adguard_config_generate
+    adguard_change_ttl
   elif [ "$MODE" == "dnsmasq" ]; then
     dnsmasq_config_generate
   fi
@@ -93,10 +101,10 @@ diff_funk() {
  #RESTART DNS FUNCTION
 restart_dns_func() {
   if [ "$DEBUG" == "1" ]; then echo -e "\n########### $(date) STEP_5: restart dns ###########\n" >&2; fi
-  if [ "$(cat $MD5_SUM)" != "$(md5sum $IPSET_LIST*)" ]; then
+  if [ "$(cat $MD5_SUM)" != "$(md5sum $IPSET_LIST $IPSET_CONF)" ]; then
     echo "Flush Ipset"
     $SYSTEM_FOLDER/etc/init.d/S03ipset-table restart
-    md5sum $IPSET_LIST* > $MD5_SUM
+    md5sum $IPSET_LIST $IPSET_CONF > $MD5_SUM
     echo "Restarting DNS"
     if [ "$MODE" == "adguardhome" ]; then
       $SYSTEM_FOLDER/etc/init.d/S99adguardhome restart
