@@ -126,7 +126,7 @@ config_isp_func(){
   fi
   echo "Your are select ISP $VISP_NAME"
   sed -i 's/ISPINPUT/'$VISP_NAME'/' $SYSTEM_FOLDER/etc/ipset4static.conf
-  if [ -n "$VISP_GW" ]; then sed -i 's/#ISP_GW=/ISP_GW=/' $SYSTEM_FOLDER/etc/ipset4static.conf
+  if [ -n "$VISP_GW" ]; then sed -i 's/#ISP_GW=/ISP_GW=/' $SYSTEM_FOLDER/etc/ipset4static.conf; fi
 }
 
 # Config VPN1
