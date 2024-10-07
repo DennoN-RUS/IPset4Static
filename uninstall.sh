@@ -40,7 +40,7 @@ if [ -f "$SYSTEM_FOLDER/etc/dnsmasq.conf" ]; then
 fi
 if [ -f "$SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml" ]; then
   if [ $(cat $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml | grep "ipset_file: $SYSTEM_FOLDER/etc/ipset4static_list.conf" -c ) -eq 1 ]; then
-    sed -i 's/ipset_file: '$SYSTEM_FOLDER_SED'\/etc\/ipset4static_list.conf/' $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml
+    sed -i 's/ipset_file.*/ipset_file: ""/' $SYSTEM_FOLDER/etc/AdGuardHome/AdGuardHome.yaml
     $SYSTEM_FOLDER/etc/init.d/S99adguardhome restart
   fi
 fi
