@@ -60,13 +60,13 @@ adguard_config_generate(){
 
 dnsmasq_config_generate(){
   if [ -n "$TTL" ]; then echo -e "max-ttl=$TTL"; fi
-  if [ -n "$ISP_COMMON" ]; then echo -e "ipset=/$(echo $ISP_COMMON | sed 's/ /\//g')/ipset_isp1"; fi
+  if [ -n "$ISP_COMMON" ]; then for $domain in $ISP_COMMON; do echo "ipset=/$domain/ipset_isp1"; done; fi
   if [ "$CONF" == "1" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=/$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1"; fi
+    if [ -n "$VPN_COMMON" ]; then for $domain in $VPN_COMMON; do echo "ipset=/$domain/ipset_vpn1"; done; fi
   elif [ "$CONF" == "2" ]; then
-    if [ -n "$VPN_COMMON" ]; then echo -e "ipset=/$(echo $VPN_COMMON | sed 's/ /\//g')/ipset_vpn1,ipset_vpn2"; fi
-    if [ -n "$VPN_VPN1" ]; then echo -e "ipset=/$(echo $VPN_VPN1 | sed 's/ /\//g')/ipset_vpn1"; fi
-    if [ -n "$VPN_VPN2" ]; then echo -e "ipset=/$(echo $VPN_VPN2 | sed 's/ /\//g')/ipset_vpn2"; fi
+    if [ -n "$VPN_COMMON" ]; then for $domain in $VPN_COMMON; do echo "ipset=/$domain/ipset_vpn1,ipset_vpn2"; done; fi
+    if [ -n "$VPN_VPN1" ]; then for $domain in $VPN_VPN1; do echo "ipset=/$domain/ipset_vpn1"; done; fi
+    if [ -n "$VPN_VPN2" ]; then for $domain in $VPN_VPN2; do echo "ipset=/$domain/ipset_vpn2"; done; fi
   fi
 }
 

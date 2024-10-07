@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION_NEW="v1.1.0"
+VERSION_NEW="v1.1.1"
 
 # Getting the path to run the script
 ABSOLUTE_FILENAME=`readlink -f "$0"`

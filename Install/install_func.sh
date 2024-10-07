@@ -122,7 +122,7 @@ show_interfaces_func(){
 # Config ISP
 config_isp_func(){
   if [ -z "$VISP_NAME" ]; then
-    echo "Enter the name of the provider interface from the list above (for example ppp0 or eth3)"
+    echo -e "Enter the name of the provider interface from the list above (for example ppp0 or eth3)\n Or use lo if you dont want this feature"
     read VISP_NAME
   fi
   echo "Your are select ISP $VISP_NAME"
